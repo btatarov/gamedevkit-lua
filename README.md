@@ -341,10 +341,10 @@ math.vector(math.pi / 4, 100) -- Returns 70.710678118655, 70.710678118655
 ## math randomization methods
 
 #### math.randomseed(...)
-Mimics the behaviour of Lua's `math.randomseed`, but uses the implementation of the mersenne twister instead.
+Mimics the behaviour of Lua's `math.randomseed`, but uses the implementation of the mersenne twister instead (for Lua versions below 5.4).
 
 #### math.random(...)
-Mimics the behaviour of Lua's `math.random`, but uses the implementation of the mersenne twister instead.
+Mimics the behaviour of Lua's `math.random`, but uses the implementation of the mersenne twister instead (for Lua versions below 5.4).
 
 #### math.random_number([a [, b]])
  Returns a random number between `a` and `b`. If only `a` is supplied, a number between `0` and `a` is returned. If no arguments are supplied, a random number between `0` and `1` is returned.

@@ -1332,6 +1332,9 @@ function env.hotswap(modname)
     return oldmod
 end
 
+--------------------------------------------------------------------------------
+-- Returns the current Lua version using the _VERSION variable.
+--------------------------------------------------------------------------------
 function env.get_lua_version()
     local version = {}
     local version_split = string.split(string.split(_VERSION)[2], '.')
