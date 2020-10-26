@@ -1,6 +1,10 @@
+--------------------------------------------------------------------------------
 -- gamedevkit-lua v0.1
+--------------------------------------------------------------------------------
 
--- Locals are faster
+--------------------------------------------------------------------------------
+-- Local definitions
+--------------------------------------------------------------------------------
 local type         = type
 local select       = select
 local pairs        = pairs
@@ -18,7 +22,9 @@ local pcall        = pcall
 local xpcall       = xpcall
 local _
 
+--------------------------------------------------------------------------------
 -- Forward declarations
+--------------------------------------------------------------------------------
 local class
 local singleton
 local table
@@ -27,7 +33,9 @@ local string
 local env
 local mersenne_twister
 
+--------------------------------------------------------------------------------
 -- Helper functions
+--------------------------------------------------------------------------------
 local noop = function()
 end
 
@@ -858,6 +866,7 @@ end
 --------------------------------------------------------------------------------
 -- Override the random seeding function to use the mersenne twister
 --------------------------------------------------------------------------------
+math.__old_randomseed = math.randomseed
 function math.randomseed(...)
     local mt = mersenne_twister()
     mt:init_genrand(...)
@@ -866,6 +875,7 @@ end
 --------------------------------------------------------------------------------
 -- Override the random function to use the mersenne twister
 --------------------------------------------------------------------------------
+math.__old_random = math.random
 function math.random(a, b)
     local mt = mersenne_twister()
     if not a then
@@ -3024,7 +3034,22 @@ function mersenne_twister:genrand_res53()
         return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0)
 end
 
+--------------------------------------------------------------------------------
+-- Restore the original random and randomseed methods for Lua versions above 5.3
+--------------------------------------------------------------------------------
+local lua_version = env.get_lua_version()
+if (
+    (lua_version.major == 5 and lua_version.minor > 3) or lua_version.major > 5
+) then
+    math.randomseed = math.__old_randomseed
+    math.random = math.__old_random
+end
+math.__old_randomseed = nil
+math.__old_random = nil
+
+--------------------------------------------------------------------------------
 -- Update globals
+--------------------------------------------------------------------------------
 _G.class     = class
 _G.singleton = singleton
 _G.table     = table

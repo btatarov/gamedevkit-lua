@@ -282,6 +282,7 @@ assert(date.diff(date(a):adddays(2), a):spanseconds() == (2 * 24 * 60 * 60), 'er
 assert(date.diff(date(a):adddays(2), a):spanticks() == (2 * 24 * 60 * 60 * 1000000), 'error in date:spanticks'); env.trace('(done) date:spanticks')
 
 -- Mersenne Twister random tests
+-- TODO: update for Lua 5.4 and above
 math.randomseed(1234) -- restore initial state
 assert(math.random(env.huge_num) == 822569776, 'error in math.random(number)'); env.trace('(done) math.random in [1, number]')
 math.randomseed(2345) -- change state
