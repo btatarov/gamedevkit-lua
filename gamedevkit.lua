@@ -1322,6 +1322,14 @@ function env.hotswap(modname)
     return oldmod
 end
 
+function env.get_lua_version()
+    local version = {}
+    local version_split = string.split(string.split(_VERSION)[2], '.')
+    version.major = tonumber(version_split[1])
+    version.minor = tonumber(version_split[2])
+    return version
+end
+
 --------------------------------------------------------------------------------
 -- Performs the same function as ipairs() but iterates in reverse; this allows
 -- the removal of items from the table during iteration without any items being

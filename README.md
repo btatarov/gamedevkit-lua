@@ -499,6 +499,11 @@ Reloads an already loaded module in place, allowing you to immediately see the e
 env.hotswap('gamedevkit') -- Reloads the gamedevkit-lua module
 assert(env.hotswap('inexistant_module')) -- Raises an error
 ```
+#### env.get_lua_version()
+Returns the current Lua version using the `_VERSION` variable.
+```lua
+env.get_lua_version() -- Returns {major = X, minor = Y}
+```
 
 ## ripairs function
 Performs the same function as `ipairs()` but iterates in reverse; this allows the removal of items from the table during iteration without any items being skipped.

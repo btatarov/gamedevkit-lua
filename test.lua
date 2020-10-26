@@ -134,10 +134,11 @@ r1, r2 = env.timed(function(v) local t0 = os.clock(); while os.clock() - t0 <= 0
 assert(env.lambda('x,y -> 2*x+y')(10, 5) == 25, 'error in env.lambda') env.trace('(done) env.lambda')
 assert(env.serialize({a = 'test', b = {1, 2, 3}, false}) == '{[1]=false,["a"]="test",["b"]={[1]=1,[2]=2,[3]=3}}', 'error in env.serialize') env.trace('(done) env.serialize')
 tbl1 = env.deserialize('{1, 2, 3}'); assert(#tbl1 == 3 and tbl1[1] == 1 and tbl1[2] == 2 and tbl1[3] == 3, 'error in env.deserialize') env.trace('(done) env.deserialize')
-local f1 = io.open('hotswap.lua', 'wb'); f1:write('hotswapped = 1'); f1:close(); require('hotswap'); r1 = hotswapped
-local f1 = io.open('hotswap.lua', 'wb'); f1:write('hotswapped = 2'); f1:close(); env.hotswap('hotswap'); r2 = hotswapped
+f1 = io.open('hotswap.lua', 'wb'); f1:write('hotswapped = 1'); f1:close(); require('hotswap'); r1 = hotswapped
+f1 = io.open('hotswap.lua', 'wb'); f1:write('hotswapped = 2'); f1:close(); env.hotswap('hotswap'); r2 = hotswapped
 os.remove('hotswap.lua'); hotswapped = nil
 assert(r1 == 1 and r2 == 2, 'error in env.hotswap') env.trace('(done) env.hotswap')
+local lua_version = env.get_lua_version(); assert(lua_version.major >= 5 and lua_version.minor >= 1, 'error in env.get_lua_version') env.trace('(done) env.get_lua_version')
 
 -- ripairs test
 local tbl1 = {}
